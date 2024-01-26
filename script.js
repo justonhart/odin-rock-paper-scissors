@@ -67,4 +67,3 @@ function game(){
 	console.log(`${playerWins > computerWins ? "Player" : "Computer"} is the final winner!`);
 }
 
-game();
