@@ -1,6 +1,8 @@
 const output = document.getElementById('textOutput');
 const playerScoreDisplay = document.getElementById('playerScore');
 const computerScoreDisplay = document.getElementById('computerScore');
+const playerChoiceDisplay = document.getElementById('playerChoice');
+const computerChoiceDisplay = document.getElementById('computerChoice');
 
 output.textContent = "Want to play? Make your move below!";
 
@@ -21,45 +23,48 @@ function getComputerChoice(){
 	let choice;
 
 	if(rand < 34){
-		choice = "R";
+		choice = "rock";
 	}
 	else if(rand < 67){
-		choice = "P";
+		choice = "paper";
 	}
 	else{
-		choice = "S";
+		choice = "scissors";
 	}
 	return choice;
 }
 
-function playRound(choice){
-	const playerSelection = choice[0].toUpperCase(); 
+function playRound(playerSelection){
 	const computerSelection = getComputerChoice();
+
+	playerChoiceDisplay.textContent = `You chose: ${playerSelection}`;
+	computerChoiceDisplay.textContent = `Computer chose: ${computerSelection}`;
+
 
 	if(playerSelection === computerSelection){
 		updateOutput("Tie! Choose again!");
-		return false;
+		return;
 	}
 
 	let playerWon = false;
 
 	switch(playerSelection){
-		case "R":
-			playerWon = computerSelection === "S";
+		case "rock":
+			playerWon = computerSelection === "scissors";
 			break;
-		case "P":
-			playerWon = computerSelection === "R";
+		case "paper":
+			playerWon = computerSelection === "rock";
 			break;
-		case "S":
-			playerWon = computerSelection === "P";
+		case "scissors":
+			playerWon = computerSelection === "paper";
 			break;
 	}
 
 	if(playerWon){
-		updateOutput("You win!");
+		updateOutput("You win! Choose again!");
 		playerWins++;
 	} else {
-		updateOutput("Computer wins!");
+		updateOutput("Computer wins! Choose again!");
 		computerWins++;
 	}
 
