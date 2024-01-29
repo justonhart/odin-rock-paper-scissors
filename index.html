@@ -3,13 +3,17 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Rock Paper Scissors</title>
-	<script src="script.js"></script>
+	<script src="script.js" defer></script>
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<h1>Rock - Paper - Scissors</h1>
 	<div id="output">
-		Choose your weapon!
+		<span id="textOutput">Loading... (Requires JavaScript)</span>
+		<div id="scores">
+			<span id="playerScore">Player Score: 0</span>
+			<span id="computerScore">Computer Score: 0</span>
+		</div>
 	</div>
 	<div class="container">
 		<button id="rock">Rock</button>

@@ -1,3 +1,21 @@
+const output = document.getElementById('textOutput');
+const playerScoreDisplay = document.getElementById('playerScore');
+const computerScoreDisplay = document.getElementById('computerScore');
+
+output.textContent = "Want to play? Make your move below!";
+
+let playerWins = 0;
+let computerWins = 0;
+
+function updateOutput(string){
+	output.textContent = string;
+}
+
+function updateScores() {
+	playerScoreDisplay.textContent = `Player Score: ${playerWins}`;
+	computerScoreDisplay.textContent = `Computer Score: ${computerWins}`;
+}
+
 function getComputerChoice(){
 	let rand = Math.random() * 100;
 	let choice;
@@ -14,56 +32,46 @@ function getComputerChoice(){
 	return choice;
 }
 
-/** 
- * Returns null if game was a tie, otherwise "P" for player or "C" for computer
- */
-function playRound(playerSelection, computerSelection){
+function playRound(choice){
+	const playerSelection = choice[0].toUpperCase(); 
+	const computerSelection = getComputerChoice();
 
 	if(playerSelection === computerSelection){
-		console.log("Tie! Choose again!");
+		updateOutput("Tie! Choose again!");
 		return false;
 	}
 
-	let playerWins = false;
+	let playerWon = false;
 
-	switch(playerSelection.toUpperCase()){
+	switch(playerSelection){
 		case "R":
-			playerWins = computerSelection === "S";
+			playerWon = computerSelection === "S";
 			break;
 		case "P":
-			playerWins = computerSelection === "R";
+			playerWon = computerSelection === "R";
 			break;
 		case "S":
-			playerWins = computerSelection === "P";
+			playerWon = computerSelection === "P";
 			break;
 	}
 
-	if(playerWins){
-		console.log("You win!");
-		return "P";
+	if(playerWon){
+		updateOutput("You win!");
+		playerWins++;
 	} else {
-		console.log("Computer wins!");
-		return "C";
-	}
-}
-
-function game(){
-	let round = 1;
-
-	let computerWins = 0;
-	let playerWins = 0;
-
-	while(round <= 5){
-		let playerChoice = prompt("Rock, Paper, or Scissors?")[0].toUpperCase();
-		let outcome = playRound(playerChoice, getComputerChoice());
-		if(outcome){
-			round++;
-			outcome == "P" ? playerWins += 1 : computerWins += 1;
-		}
+		updateOutput("Computer wins!");
+		computerWins++;
 	}
 
-	console.log(`Player wins: ${playerWins}`);
-	console.log(`Computer wins: ${computerWins}`);
-	console.log(`${playerWins > computerWins ? "Player" : "Computer"} is the final winner!`);
+	updateScores();
 }
 
+addEventListener('click', (event) => {
+	switch(event.target.id){
+		case "rock":
+		case "paper":
+		case "scissors":
+			playRound(event.target.id);
+			break;
+	}
+});
